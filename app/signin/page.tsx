@@ -25,6 +25,12 @@ function SignInForm() {
     setLoading(true);
     setError(null);
 
+    // Demo mode - redirect to dashboard
+    if (!supabaseConfigured) {
+      router.push(redirectTo);
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -41,6 +47,13 @@ function SignInForm() {
 
   const handleOAuthSignIn = async (provider: "google" | "github") => {
     setLoading(true);
+
+    // Demo mode - redirect to dashboard
+    if (!supabaseConfigured) {
+      router.push(redirectTo);
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {

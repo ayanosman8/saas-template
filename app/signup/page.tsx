@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Sparkles, Mail, Lock, User, ArrowLeft, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { siteConfig } from "@/lib/config";
@@ -9,6 +10,7 @@ import { siteConfig } from "@/lib/config";
 const supabaseConfigured = isSupabaseConfigured();
 
 export default function SignUp() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +24,12 @@ export default function SignUp() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    // Demo mode - redirect to dashboard
+    if (!supabaseConfigured) {
+      router.push("/dashboard");
+      return;
+    }
 
     const { error } = await supabase.auth.signUp({
       email,
@@ -45,6 +53,13 @@ export default function SignUp() {
 
   const handleOAuthSignIn = async (provider: "google" | "github" | "twitter") => {
     setLoading(true);
+
+    // Demo mode - redirect to dashboard
+    if (!supabaseConfigured) {
+      router.push("/dashboard");
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
