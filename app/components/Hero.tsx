@@ -1,9 +1,19 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Sparkles, Heart, Star } from "lucide-react";
 import { siteConfig } from "@/lib/config";
+
+// Pre-defined particle positions to avoid Math.random() during render
+const PARTICLE_POSITIONS = [
+  { left: 15, top: 20, duration: 4.5, delay: 0.5 },
+  { left: 85, top: 35, duration: 5.2, delay: 1.2 },
+  { left: 25, top: 70, duration: 4.8, delay: 0.8 },
+  { left: 75, top: 15, duration: 5.5, delay: 1.8 },
+  { left: 45, top: 85, duration: 4.2, delay: 0.3 },
+  { left: 90, top: 60, duration: 5.0, delay: 1.5 },
+];
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -65,22 +75,22 @@ export default function Hero() {
       {/* Floating particles */}
       {isMounted && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(6)].map((_, i) => (
+          {PARTICLE_POSITIONS.map((particle, i) => (
             <motion.div
               key={i}
               className="absolute"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
               }}
               animate={{
                 y: [0, -30, 0],
                 opacity: [0.2, 0.5, 0.2],
               }}
               transition={{
-                duration: 4 + Math.random() * 2,
+                duration: particle.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: particle.delay,
                 ease: "easeInOut",
               }}
             >
