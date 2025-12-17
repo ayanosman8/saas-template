@@ -59,45 +59,34 @@ export default function Portfolio() {
         </motion.div>
 
         {/* Portfolio Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6">
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              className="relative group cursor-pointer"
+              className="relative"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ y: -10 }}
             >
               {/* Glow Effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-50 transition duration-500"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500 rounded-2xl blur-xl opacity-20"></div>
 
               {/* Card */}
-              <div className="relative bg-gradient-to-br from-pink-500/5 to-rose-500/5 backdrop-blur-xl rounded-3xl border border-pink-300/20 overflow-hidden">
+              <div className="relative bg-gradient-to-br from-pink-500/5 to-rose-500/5 backdrop-blur-xl rounded-2xl border border-pink-300/20 overflow-hidden">
                 {/* Image Placeholder */}
-                <div className="relative aspect-[16/10] bg-gradient-to-br from-pink-500/20 to-rose-500/20 overflow-hidden">
+                <div className="relative aspect-[2/1] bg-gradient-to-br from-pink-500/20 to-rose-500/20 overflow-hidden">
                   {/* Placeholder Content */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <ImageIcon className="w-20 h-20 text-pink-400/30" />
+                    <ImageIcon className="w-12 h-12 text-pink-400/30" />
                   </div>
 
                   {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/40 via-transparent to-rose-500/40 group-hover:opacity-70 transition-opacity duration-500"></div>
-
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <div className="relative">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full blur-lg opacity-60"></div>
-                      <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-4 border border-white/20">
-                        <ExternalLink className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/40 via-transparent to-rose-500/40"></div>
 
                   {/* Category Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <div className="bg-gradient-to-r from-pink-500/80 to-rose-500/80 backdrop-blur-md rounded-full px-4 py-2 border border-pink-300/30">
+                  <div className="absolute top-3 left-3 z-10">
+                    <div className="bg-gradient-to-r from-pink-500/80 to-rose-500/80 backdrop-blur-md rounded-full px-3 py-1 border border-pink-300/30">
                       <span className="text-xs font-light text-white tracking-wide">
                         {project.category}
                       </span>
@@ -106,11 +95,11 @@ export default function Portfolio() {
                 </div>
 
                 {/* Content */}
-                <div className="p-8">
-                  <h3 className="text-2xl font-extralight text-white mb-3 group-hover:text-pink-300 transition-colors">
+                <div className="p-5">
+                  <h3 className="text-xl font-extralight text-white mb-2">
                     {project.title}
                   </h3>
-                  <p className="text-white/60 font-light leading-relaxed mb-4">
+                  <p className="text-white/60 font-light text-sm leading-relaxed mb-3">
                     {project.description}
                   </p>
 
@@ -119,7 +108,7 @@ export default function Portfolio() {
                     {project.tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 rounded-full text-xs font-light text-pink-300/80 border border-pink-300/20 bg-pink-500/5"
+                        className="px-2 py-0.5 rounded-full text-xs font-light text-pink-300/80 border border-pink-300/20 bg-pink-500/5"
                       >
                         {tag}
                       </span>

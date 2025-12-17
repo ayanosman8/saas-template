@@ -3,9 +3,12 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Plus, Minus, Trash2, ShoppingBag, CreditCard } from "lucide-react";
+import Image from "next/image";
+import { siteConfig } from "@/lib/config";
+import { menuItems } from "@/data/menu";
 
 interface CartItem {
-  id: number;
+  id: string;
   name: string;
   category: string;
   price: number;
@@ -18,32 +21,23 @@ interface CartProps {
   onClose: () => void;
 }
 
-export default function Cart({ isOpen, onClose }: CartProps) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Classic Croissant",
-      category: "Viennoiserie",
-      price: 4.50,
-      quantity: 2,
-    },
-    {
-      id: 2,
-      name: "Raspberry Rose Macarons",
-      category: "Signature",
-      price: 18.00,
-      quantity: 1,
-    },
-    {
-      id: 3,
-      name: "Chocolate Hazelnut Tart",
-      category: "Artisan Dessert",
-      price: 28.00,
-      quantity: 1,
-    },
-  ]);
+// Sample cart items from menu data (in a real app, this would come from state management)
+const getInitialCartItems = (): CartItem[] => {
+  const sampleItems = menuItems.filter(item => item.price).slice(0, 3);
+  return sampleItems.map((item, index) => ({
+    id: item.id,
+    name: item.name,
+    category: item.category,
+    price: item.price!,
+    quantity: index === 0 ? 2 : 1,
+    image: item.image,
+  }));
+};
 
-  const updateQuantity = (id: number, change: number) => {
+export default function Cart({ isOpen, onClose }: CartProps) {
+  const [cartItems, setCartItems] = useState<CartItem[]>(getInitialCartItems);
+
+  const updateQuantity = (id: string, change: number) => {
     setCartItems(items =>
       items.map(item =>
         item.id === id
@@ -53,13 +47,14 @@ export default function Cart({ isOpen, onClose }: CartProps) {
     );
   };
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string) => {
     setCartItems(items => items.filter(item => item.id !== id));
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const tax = subtotal * 0.08;
+  const tax = subtotal * siteConfig.cart.taxRate;
   const total = subtotal + tax;
+  const taxPercent = Math.round(siteConfig.cart.taxRate * 100);
 
   return (
     <AnimatePresence>
@@ -95,7 +90,7 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                   </div>
                   <div>
                     <h2 className="text-2xl font-serif font-normal text-white">Your Order</h2>
-                    <p className="text-xs text-white/60 font-light">La Rose Pâtisserie</p>
+                    <p className="text-xs text-white/60 font-light">{siteConfig.name} {siteConfig.nameAccent}</p>
                   </div>
                 </div>
                 <button
@@ -125,9 +120,19 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                     {/* Item Card */}
                     <div className="relative bg-gradient-to-br from-pink-500/5 to-rose-500/5 backdrop-blur-xl rounded-xl border border-pink-300/20 p-4">
                       <div className="flex gap-4">
-                        {/* Image Placeholder */}
-                        <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-pink-500/20 to-rose-500/20 flex items-center justify-center flex-shrink-0">
-                          <ShoppingBag className="w-8 h-8 text-pink-400/40" />
+                        {/* Image */}
+                        <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-pink-500/20 to-rose-500/20 flex items-center justify-center flex-shrink-0 overflow-hidden relative">
+                          {item.image ? (
+                            <Image
+                              src={item.image}
+                              alt={item.name}
+                              fill
+                              className="object-cover"
+                              sizes="80px"
+                            />
+                          ) : (
+                            <ShoppingBag className="w-8 h-8 text-pink-400/40" />
+                          )}
                         </div>
 
                         {/* Details */}
@@ -165,8 +170,8 @@ export default function Cart({ isOpen, onClose }: CartProps) {
 
                             {/* Price */}
                             <div className="text-right">
-                              <div className="text-white font-light">${(item.price * item.quantity).toFixed(2)}</div>
-                              <div className="text-xs text-white/40">${item.price.toFixed(2)} each</div>
+                              <div className="text-white font-light">{siteConfig.cart.currency}{(item.price * item.quantity).toFixed(2)}</div>
+                              <div className="text-xs text-white/40">{siteConfig.cart.currency}{item.price.toFixed(2)} each</div>
                             </div>
                           </div>
                         </div>
@@ -196,17 +201,17 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-white/60 font-light">Subtotal</span>
-                    <span className="text-white font-light">${subtotal.toFixed(2)}</span>
+                    <span className="text-white font-light">{siteConfig.cart.currency}{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/60 font-light">Tax (8%)</span>
-                    <span className="text-white font-light">${tax.toFixed(2)}</span>
+                    <span className="text-white/60 font-light">Tax ({taxPercent}%)</span>
+                    <span className="text-white font-light">{siteConfig.cart.currency}{tax.toFixed(2)}</span>
                   </div>
                   <div className="h-px bg-gradient-to-r from-transparent via-pink-300/20 to-transparent"></div>
                   <div className="flex justify-between">
                     <span className="text-white font-light">Total</span>
                     <span className="text-2xl font-serif font-medium bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent">
-                      ${total.toFixed(2)}
+                      {siteConfig.cart.currency}{total.toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -216,13 +221,13 @@ export default function Cart({ isOpen, onClose }: CartProps) {
                   <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-rose-400 to-pink-500 rounded-full blur-lg opacity-60 group-hover:opacity-100 transition duration-500"></div>
                   <div className="relative px-8 py-4 rounded-full text-white font-light tracking-wide text-lg border-2 border-pink-400/60 hover:border-pink-300 transition duration-300 bg-transparent flex items-center justify-center gap-2">
                     <CreditCard className="w-5 h-5" />
-                    <span>Proceed to Checkout</span>
+                    <span>{siteConfig.cta.checkout}</span>
                   </div>
                 </button>
 
                 {/* Additional Info */}
                 <p className="text-center text-xs text-white/40 font-light">
-                  Pickup available in 30-45 minutes
+                  Pickup available in {siteConfig.cart.pickupTime}
                 </p>
               </div>
             )}

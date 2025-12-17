@@ -4,17 +4,11 @@ import React, { useState } from "react";
 import { Menu, X, Sparkles, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Cart from "./Cart";
+import { siteConfig } from "@/lib/config";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  const navItems = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Menu", href: "#menu" },
-    { name: "Contact", href: "#contact" },
-  ];
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -44,15 +38,15 @@ export default function Header() {
                 </div>
                 <span className="text-2xl font-serif font-medium tracking-tight">
                   <span className="bg-gradient-to-r from-pink-200 via-rose-200 to-pink-200 bg-clip-text text-transparent">
-                    La Rose
+                    {siteConfig.name}
                   </span>
-                  <span className="text-white/90"> Pâtisserie</span>
+                  <span className="text-white/90"> {siteConfig.nameAccent}</span>
                 </span>
               </div>
 
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center gap-8">
-                {navItems.map((item) => (
+                {siteConfig.navigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
@@ -78,7 +72,7 @@ export default function Header() {
                 <button className="relative group/btn overflow-hidden">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 via-rose-400 to-pink-500 rounded-full blur opacity-60 group-hover/btn:opacity-100 transition duration-300"></div>
                   <div className="relative bg-gradient-to-r from-pink-500/80 via-rose-500/80 to-pink-500/80 backdrop-blur-sm px-6 py-2 rounded-full border border-pink-300/30 text-white text-sm font-light tracking-wide hover:border-pink-300/50 transition duration-300">
-                    Order Now
+                    {siteConfig.cta.orderNow}
                   </div>
                 </button>
               </div>
@@ -114,7 +108,7 @@ export default function Header() {
                   className="md:hidden overflow-hidden"
                 >
                   <div className="flex flex-col gap-4 pt-6 pb-2">
-                    {navItems.map((item) => (
+                    {siteConfig.navigation.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -127,7 +121,7 @@ export default function Header() {
                     <button className="relative group/btn overflow-hidden w-full mt-2">
                       <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 via-rose-400 to-pink-500 rounded-full blur opacity-60 group-hover/btn:opacity-100 transition duration-300"></div>
                       <div className="relative bg-gradient-to-r from-pink-500/80 via-rose-500/80 to-pink-500/80 backdrop-blur-sm px-6 py-2 rounded-full border border-pink-300/30 text-white text-sm font-light tracking-wide">
-                        Order Now
+                        {siteConfig.cta.orderNow}
                       </div>
                     </button>
                   </div>
