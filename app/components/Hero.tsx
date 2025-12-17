@@ -51,7 +51,7 @@ export default function Hero() {
     <section
       ref={containerRef}
       id="home"
-      className="pt-32 pb-20 w-full min-h-screen flex items-center relative overflow-hidden"
+      className="pt-40 pb-20 w-full min-h-screen flex items-center relative overflow-hidden"
     >
       {/* Background Effects - pink/rose gradient theme */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-indigo-500/5"></div>
