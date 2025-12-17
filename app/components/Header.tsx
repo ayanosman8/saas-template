@@ -79,12 +79,20 @@ export default function Header() {
                     Dashboard
                   </Link>
                 ) : (
-                  <Link
-                    href="/signup"
-                    className="bg-blue-500/80 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-blue-500 transition duration-200"
-                  >
-                    Get Started
-                  </Link>
+                  <>
+                    <Link
+                      href="/signin"
+                      className="text-white/80 hover:text-blue-300 transition-colors duration-300 font-light text-sm tracking-wide"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="bg-blue-500/80 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-blue-500 transition duration-200"
+                    >
+                      Get Started
+                    </Link>
+                  </>
                 )}
               </div>
 
@@ -134,12 +142,20 @@ export default function Header() {
                         Dashboard
                       </Link>
                     ) : (
-                      <Link
-                        href="/signup"
-                        className="bg-blue-500/80 text-white w-full py-2 rounded-full text-sm font-medium hover:bg-blue-500 transition duration-200 mt-2 text-center"
-                      >
-                        Get Started
-                      </Link>
+                      <>
+                        <Link
+                          href="/signin"
+                          className="text-white/80 hover:text-blue-300 transition-colors duration-300 font-light text-sm tracking-wide"
+                        >
+                          Sign In
+                        </Link>
+                        <Link
+                          href="/signup"
+                          className="bg-blue-500/80 text-white w-full py-2 rounded-full text-sm font-medium hover:bg-blue-500 transition duration-200 mt-2 text-center"
+                        >
+                          Get Started
+                        </Link>
+                      </>
                     )}
                   </div>
                 </motion.div>
