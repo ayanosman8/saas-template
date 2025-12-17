@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Sparkles, Mail, Lock, User, ArrowLeft, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Sparkles, Mail, Lock, ArrowLeft, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { siteConfig } from "@/lib/config";
 
@@ -11,7 +11,6 @@ const supabaseConfigured = isSupabaseConfigured();
 
 export default function SignUp() {
   const router = useRouter();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,9 +34,6 @@ export default function SignUp() {
       email,
       password,
       options: {
-        data: {
-          full_name: name,
-        },
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
@@ -158,22 +154,6 @@ export default function SignUp() {
 
           {/* Form */}
           <form onSubmit={handleSignUp} className="space-y-4">
-            <div>
-              <label className="block text-white/60 text-sm mb-2">Name</label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg pl-11 pr-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 transition"
-                  required
-                  disabled={loading}
-                />
-              </div>
-            </div>
-
             <div>
               <label className="block text-white/60 text-sm mb-2">Email</label>
               <div className="relative">
