@@ -16,8 +16,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "La Rose Pâtisserie - Artisan French Bakery",
-  description: "Authentic French pastries and artisan breads baked fresh daily with love, tradition, and the finest ingredients",
+  title: "ShipFast - The Modern SaaS Starter Kit",
+  description: "Ship your next product fast with authentication, payments, and beautiful UI out of the box.",
 };
 
 export default function RootLayout({

@@ -16,8 +16,8 @@ export default function About() {
   return (
     <section id="about" className="py-32 px-4 relative overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-transparent to-rose-500/5"></div>
-      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-br from-pink-500/10 to-rose-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-indigo-500/5"></div>
+      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
@@ -29,7 +29,7 @@ export default function About() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-6xl font-serif font-normal tracking-tight mb-6">
-            <span className="bg-gradient-to-r from-pink-400 via-rose-300 to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-blue-400 bg-clip-text text-transparent">
               {siteConfig.about.title}
             </span>
           </h2>
@@ -47,8 +47,8 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
-            <div className="relative bg-gradient-to-br from-pink-500/10 to-rose-500/10 backdrop-blur-xl rounded-3xl border border-pink-300/20 overflow-hidden aspect-[4/3]">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-500 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
+            <div className="relative bg-gradient-to-br from-blue-500/10 to-indigo-500/10 backdrop-blur-xl rounded-3xl border border-blue-300/20 overflow-hidden aspect-[4/3]">
               {siteConfig.about.image ? (
                 <Image
                   src={siteConfig.about.image}
@@ -60,13 +60,13 @@ export default function About() {
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="text-center space-y-4">
-                    <Sparkles className="w-16 h-16 text-pink-400/40 mx-auto" />
+                    <Sparkles className="w-16 h-16 text-blue-400/40 mx-auto" />
                     <p className="text-white/40 font-light">Add your image</p>
                   </div>
                 </div>
               )}
               {/* Decorative gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/20 via-transparent to-rose-500/20 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-transparent to-indigo-500/20 pointer-events-none"></div>
             </div>
           </motion.div>
 
@@ -80,7 +80,7 @@ export default function About() {
           >
             <h3 className="text-3xl md:text-4xl font-serif font-normal text-white">
               {siteConfig.about.heading}{" "}
-              <span className="bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
                 {siteConfig.about.headingAccent}
               </span>
             </h3>
@@ -96,9 +96,9 @@ export default function About() {
                 const IconComponent = iconMap[value.icon as keyof typeof iconMap];
                 return (
                   <div key={index} className="relative group">
-                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${index % 2 === 0 ? 'from-pink-500 to-rose-500' : 'from-rose-500 to-pink-500'} rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500`}></div>
-                    <div className={`relative bg-gradient-to-br ${index % 2 === 0 ? 'from-pink-500/10 to-rose-500/10' : 'from-rose-500/10 to-pink-500/10'} backdrop-blur-xl rounded-2xl border border-pink-300/20 p-6 text-center`}>
-                      <IconComponent className={`w-8 h-8 ${index % 2 === 0 ? 'text-pink-400' : 'text-rose-400'} mx-auto mb-3`} />
+                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${index % 2 === 0 ? 'from-blue-500 to-indigo-500' : 'from-indigo-500 to-blue-500'} rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500`}></div>
+                    <div className={`relative bg-gradient-to-br ${index % 2 === 0 ? 'from-blue-500/10 to-indigo-500/10' : 'from-indigo-500/10 to-blue-500/10'} backdrop-blur-xl rounded-2xl border border-blue-300/20 p-6 text-center`}>
+                      <IconComponent className={`w-8 h-8 ${index % 2 === 0 ? 'text-blue-400' : 'text-indigo-400'} mx-auto mb-3`} />
                       <h4 className="text-sm font-light text-white/90 uppercase tracking-wider">{value.label}</h4>
                     </div>
                   </div>

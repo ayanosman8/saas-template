@@ -1,141 +1,152 @@
-# Starter Template - Modern Business Landing Page
+# ShipFast - SaaS Starter Kit
 
-A beautiful, modern Next.js landing page template with glassmorphic design, smooth animations, and easy customization. Perfect for bakeries, cafes, restaurants, and small businesses.
+A production-ready Next.js starter kit with authentication, payments, and a beautiful dashboard. Stop rebuilding the same features — start shipping faster.
 
-![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
 ![React](https://img.shields.io/badge/React-19-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)
 
-## Features
+## What's Included
 
-- Modern glassmorphic UI design
-- Smooth Framer Motion animations
-- Fully responsive (mobile-first)
-- TypeScript for type safety
-- Easy customization via config files
-- Dark theme with pink/rose accents
-- Shopping cart component
-- SEO-friendly structure
+### Landing Page
+- Modern glassmorphic design with smooth animations
+- Hero section with gradient effects
+- Features grid
+- Pricing table (connected to Stripe)
+- Tech stack showcase
+- Fully responsive
+
+### Authentication (Supabase)
+- Google OAuth
+- GitHub OAuth
+- Email/password (ready to enable)
+- Protected routes via middleware
+- Demo mode when not configured
+
+### Dashboard
+- Stats cards with hover effects
+- Recent activity feed
+- Quick actions
+- Search bar
+- Notification bell
+- User profile section
+
+### Settings Page
+- **Profile** - Avatar, personal info, connected accounts
+- **Billing** - Current plan, payment method, usage meters, invoice history
+- **Notifications** - Email preferences
+- **Security** - Password, 2FA, danger zone
+
+### Payments (Stripe)
+- Checkout sessions
+- Webhook handling
+- Customer portal
+- Multiple pricing tiers
+
+---
 
 ## Quick Start
 
 ```bash
 # Install dependencies
 npm install
-# or
-pnpm install
 
 # Start development server
 npm run dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your site.
+Open [http://localhost:3000](http://localhost:3000) — the template works in demo mode without any configuration.
 
 ---
 
-## Customization Guide
+## Environment Setup
 
-### 1. Site Configuration (`lib/config.ts`)
+Copy `.env.example` to `.env.local`:
 
-This is your **one-stop shop** for customizing the template. Open `lib/config.ts` and edit:
+```bash
+cp .env.example .env.local
+```
+
+### Supabase Setup
+
+1. Create a project at [supabase.com](https://supabase.com)
+2. Go to **Settings > API** and copy your credentials:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+3. Enable OAuth providers in **Authentication > Providers**:
+   - Google: Add your OAuth credentials from Google Cloud Console
+   - GitHub: Add your OAuth app credentials from GitHub Settings
+
+4. Set the redirect URL in each provider:
+   ```
+   https://your-domain.com/auth/callback
+   ```
+
+### Stripe Setup
+
+1. Get your API keys from [Stripe Dashboard](https://dashboard.stripe.com/apikeys):
+
+```env
+STRIPE_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+```
+
+2. Create products in **Stripe Dashboard > Products**, then copy the price IDs:
+
+```env
+STRIPE_STARTER_PRICE_ID=price_...
+STRIPE_PRO_PRICE_ID=price_...
+```
+
+3. Set up webhooks:
+   - Go to **Developers > Webhooks**
+   - Add endpoint: `https://your-domain.com/api/stripe/webhook`
+   - Select events: `checkout.session.completed`, `customer.subscription.*`
+   - Copy the webhook secret:
+
+```env
+STRIPE_WEBHOOK_SECRET=whsec_...
+```
+
+**Local Development:** Use Stripe CLI to forward webhooks:
+```bash
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
+
+---
+
+## Customization
+
+### Site Config (`lib/config.ts`)
+
+All text content is centralized in one file:
 
 ```typescript
 export const siteConfig = {
-  // Your business name
-  name: "La Rose",
-  nameAccent: "Patisserie",
-
-  // Main tagline shown in hero
-  tagline: "Artisan Pastries. French Elegance. Sweet Perfection.",
-
-  // Business description
-  description: "Artisan French bakery crafting authentic pastries...",
-
-  // Year founded (shown in hero)
-  foundedYear: 2018,
-
-  // ... and much more
-}
+  name: "Ship",
+  nameAccent: "Fast",
+  tagline: "Build faster. Launch sooner. Scale effortlessly.",
+  // ... hero, about, features, footer, navigation
+};
 ```
 
-**What you can customize:**
-- Business name & tagline
-- Hero section content & CTAs
-- About section story & values
-- Menu section titles
-- Footer content & CTAs
-- Navigation links
-- Social media links
-- Cart settings (tax rate, currency, pickup time)
+### Styling
 
-### 2. Menu Items (`data/menu.ts`)
+The template uses a dark theme with blue/indigo accents. To change colors:
 
-Edit your products in `data/menu.ts`:
+1. Search for `blue-` and `indigo-` in component files
+2. Replace with your preferred Tailwind colors (`emerald-`, `purple-`, `amber-`, etc.)
 
-```typescript
-export const menuItems: MenuItem[] = [
-  {
-    id: "classic-croissant",
-    name: "Classic Croissant",
-    category: "Viennoiserie",
-    description: "Buttery, flaky perfection",
-    price: 4.50,
-    icon: "croissant", // Options: "croissant" | "cake" | "coffee"
-    color: "from-pink-500 to-rose-500",
-    featured: true, // Optional: mark as featured
-  },
-  // Add more items...
-];
-```
+### Dashboard
 
-### 3. Images
-
-The template includes demo images from Unsplash. To replace them with your own:
-
-**Product Images:**
-1. Add images to `/public/images/products/`
-2. Update the `image` field in `data/menu.ts`:
-   ```typescript
-   {
-     id: "croissant",
-     name: "Classic Croissant",
-     image: "/images/products/my-croissant.jpg",
-     // ...
-   }
-   ```
-
-**About Section Image:**
-1. Add your image to `/public/images/about/`
-2. Update `lib/config.ts`:
-   ```typescript
-   about: {
-     image: "/images/about/my-bakery.jpg",
-     imageAlt: "Our beautiful bakery",
-     // ...
-   }
-   ```
-
-**Image Tips:**
-- Recommended size: 400x300px for products, 800x600px for about section
-- Use `.jpg` for photos, `.png` for graphics with transparency
-- Optimize images with [Squoosh](https://squoosh.app) before adding
-
-### 4. Changing Colors
-
-The template uses pink/rose as the primary color scheme. To change colors:
-
-1. Search and replace in all component files:
-   - `pink-` → your color (e.g., `blue-`, `purple-`, `amber-`)
-   - `rose-` → your accent color
-
-2. Common Tailwind color options:
-   - Blues: `blue`, `indigo`, `sky`, `cyan`
-   - Greens: `green`, `emerald`, `teal`
-   - Purples: `purple`, `violet`, `fuchsia`
-   - Warm: `amber`, `orange`, `red`
+Add new pages in `app/dashboard/`:
+- Copy the structure from `app/dashboard/page.tsx`
+- Add navigation link in `app/dashboard/layout.tsx`
 
 ---
 
@@ -143,50 +154,36 @@ The template uses pink/rose as the primary color scheme. To change colors:
 
 ```
 ├── app/
-│   ├── components/
-│   │   ├── Header.tsx      # Navigation bar
-│   │   ├── Hero.tsx        # Hero section
-│   │   ├── About.tsx       # About/story section
-│   │   ├── Menu.tsx        # Products grid
-│   │   ├── Footer.tsx      # Footer with CTA
-│   │   └── Cart.tsx        # Shopping cart modal
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Home page
-│   └── globals.css         # Global styles
+│   ├── api/
+│   │   └── stripe/          # Stripe endpoints
+│   │       ├── checkout/
+│   │       ├── portal/
+│   │       └── webhook/
+│   ├── auth/
+│   │   └── callback/        # OAuth callback
+│   ├── components/          # Landing page components
+│   ├── dashboard/
+│   │   ├── layout.tsx       # Dashboard layout + sidebar
+│   │   ├── page.tsx         # Main dashboard
+│   │   └── settings/        # Settings page
+│   ├── signin/
+│   ├── signup/
+│   └── success/             # Post-checkout page
 ├── lib/
-│   └── config.ts           # Site configuration
-├── data/
-│   └── menu.ts             # Menu items data
-└── public/                 # Static assets
-```
-
----
-
-## Deployment
-
-### Vercel (Recommended)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
-
-1. Push your code to GitHub
-2. Import project to Vercel
-3. Deploy!
-
-### Other Platforms
-
-```bash
-# Build for production
-npm run build
-
-# The output will be in the .next folder
+│   ├── config.ts            # Site configuration
+│   ├── stripe/              # Stripe utilities
+│   └── supabase/            # Supabase clients
+├── middleware.ts            # Route protection
+└── .env.example             # Environment template
 ```
 
 ---
 
 ## Tech Stack
 
-- **Framework:** Next.js 16 (App Router)
-- **UI:** React 19
+- **Framework:** Next.js 15 (App Router)
+- **Auth:** Supabase
+- **Payments:** Stripe
 - **Styling:** Tailwind CSS 4
 - **Animations:** Framer Motion
 - **Icons:** Lucide React
@@ -194,15 +191,45 @@ npm run build
 
 ---
 
-## Support
+## Deployment
 
-If you have questions or need help customizing:
-- Open an issue on GitHub
-- Check the [Next.js docs](https://nextjs.org/docs)
-- Check the [Tailwind docs](https://tailwindcss.com/docs)
+### Vercel (Recommended)
+
+1. Push to GitHub
+2. Import to [Vercel](https://vercel.com)
+3. Add environment variables
+4. Deploy
+
+### Other Platforms
+
+```bash
+npm run build
+```
+
+The output will be in `.next/` — deploy to any Node.js hosting.
+
+---
+
+## FAQ
+
+**Can I use this for multiple projects?**
+Yes, the license allows unlimited projects.
+
+**Do I need Supabase and Stripe to run it?**
+No, the template works in demo mode without any configuration. Perfect for previewing before setup.
+
+**How do I add more OAuth providers?**
+Enable them in Supabase Dashboard and add the button in `app/signin/page.tsx`.
+
+**How do I add a database?**
+Supabase includes PostgreSQL. Create tables in the Supabase Dashboard and query them with the Supabase client.
 
 ---
 
 ## License
 
-MIT License - feel free to use for personal and commercial projects.
+MIT License — use for personal and commercial projects.
+
+---
+
+Built with Next.js, Supabase, and Stripe.
